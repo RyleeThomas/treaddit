@@ -7,97 +7,15 @@ const downloadTrailImage = require('./api/trail-routes');
 
 /* Loading all trails to homepage on render */
 router.get('/', (req, res) => {
-    console.log(req.session);
-    Trail.findAll({
-        attributes: [
-            'id',
-            'name',
-            'length',
-            'dog_friendly',
-            'bike_friendly',
-            'difficulty',
-            'description',
-        ],
-        include: [
-            {
-                model: Comment,
-                attributes: ['id', 'comment_text', 'trail_id', 'user_id', 'created_at'],
-                include: {
-                    model: User,
-                    attributes: ['username']
-                }
-            },
-            {
-                model: Rating,
-                attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'avgRating']]
-            },
-            // {
-            //     model: User,
-            //     attributes: ['username']
-            // }
-        ]
-    }) .then(dbTrailData => {
-        if(!dbTrailData) {
-            res.status(404).json({message: 'No trail found'})
-            return;
-        }
-        const trails = dbTrailData.map(trail => trail.get({ plain: true }));
-        res.render('homepage', {trails});
-
-    }) .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    });
-});
-
-/* Render the comments for the trail selected and send user to comment page*/
-router.get('/:id', (req, res) => {
-    Trail.findOne({
-        where: {
-            id: req.params.id
-        },
-        attributes: [
-            'id',
-            'name',
-            'length',
-            'dog_friendly',
-            'bike_friendly',
-            'difficulty',
-            'description'
-        ],
-        include: [
-            {
-                model: Comment,
-                attributes: ['id', 'comment_text', 'trail_id', 'user_id', 'created_at'],
-                include: {
-                    model: User,
-                    attributes: ['username']
-                }
-            },
-            {
-                model: Rating,
-                attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'avgRating']]
-            },
-            // {
-            //     model: User,
-            //     attributes: ['username']
-            // }
-        ]
-    })
-    .then(dbTrailData => {
-        if(!dbTrailData) {
-            res.status(404).json({message: 'No trail found with this id'})
-            return;
-        }
-            // serialize the data
-            const trail = dbPostData.get({ plain: true });
-
-            // pass data to template
-            res.render('comment', { trail });
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
+    res.render('homepage', {
+        id: 1,
+        name: "South Kaibab Trail",
+        length: 3,
+        dog_friendly: true,
+        bike_friendly: true,
+        difficulty: "Difficult",
+        description: "This trail descends a series of steep, exposed switchbacks, allowing you to grasp the magnitude of the canyon as you stare into its depths.",
+        posted_by: 1
     });
 });
 
