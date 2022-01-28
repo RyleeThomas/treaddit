@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Trail, User, Comment, Rating } = require('../../models');
 const Sequelize = require('sequelize');
 const withAuth = require('../../utils/auth');
+const { urlencoded } = require('express');
 
 router.get('/', (req, res) => {
     Trail.findAll({
@@ -13,6 +14,7 @@ router.get('/', (req, res) => {
             'bike_friendly',
             'difficulty',
             'description',
+            'img_ref'
         ],
         group: 'id',
         include: [
@@ -27,11 +29,11 @@ router.get('/', (req, res) => {
             {
                 model: Rating,
                 attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'avgRating']]
+            },
+                {
+                 model: User,
+                 attributes: ['username']
             }
-            // {
-            //     model: User,
-            //     attributes: ['username']
-            // }
         ]
     })
     .then(dbTrailData => { 
@@ -76,6 +78,7 @@ router.get('/:id', (req, res) => {
             'dog_friendly',
             'bike_friendly',
             'difficulty',
+            'img_ref',
             'description'
         ],
         include: [
@@ -91,10 +94,10 @@ router.get('/:id', (req, res) => {
                 model: Rating,
                 attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'avgRating']]
             },
-            // {
-            //     model: User,
-            //     attributes: ['username']
-            // }
+            {
+                 model: User,
+                 attributes: ['username']
+             }
         ]
     })
     .then(dbTrailData => {
@@ -118,7 +121,9 @@ router.post('/', withAuth, (req, res) => {
         dog_friendly: req.body.dog_friendly,
         bike_friendly: req.body.bike_friendly,
         difficulty: req.body.difficulty,
-        description: req.body.description
+        description: req.body.description,
+        img_ref: url,
+        user_id: req.session.user_id,
     })
     .then(dbTrailData => res.json(dbTrailData))
     .catch(err => {

@@ -1,12 +1,14 @@
 const router = require('express').Router();
 const homeRoutes = require('./home-routes.js');
-const pagesRoutes = require('./pages-routes');
+const favoritesRoutes = require('./favorites-routes.js');
+const userTrailsRoutes = require('./userTrails-routes.js');
 
 
 const apiRoutes = require('./api');
 
 router.use('/', homeRoutes);
-router.use('/', pagesRoutes);
+router.use('/favorites', favoritesRoutes);
+router.use('/mytrails', userTrailsRoutes);
 router.use('/api', apiRoutes);
 
 router.use((req, res) => {

@@ -15,8 +15,35 @@ router.get('/', (req, res) => {
         bike_friendly: true,
         difficulty: "Difficult",
         description: "This trail descends a series of steep, exposed switchbacks, allowing you to grasp the magnitude of the canyon as you stare into its depths.",
-        posted_by: 1
+        img_ref: "/example.jpg",
+        comment: [
+            { 
+            id: 1,
+            comment_text: "I love this trail!"
+        },{
+            id: 1,
+            comment_text: "This trail has a beautiful view."
+        }
+        ],
+        rating: 3,
+        
     });
+});
+
+/* Render the comments for the trail selected on seperate page*/
+router.get('/:id', (req, res) => {
+    const trail = {
+        id: 1,
+        name: "South Kaibab Trail",
+        length: 3,
+        dog_friendly: true,
+        bike_friendly: true,
+        difficulty: "Difficult",
+        img_ref: "/example.jpg",
+        description: "This trail descends a series of steep, exposed switchbacks, allowing you to grasp the magnitude of the canyon as you stare into its depths.",
+    }
+        // pass data to template
+        res.render('comment', { trail });
 });
 
 const exphbs = require('express-handlebars');
@@ -36,55 +63,6 @@ hbs.handlebars.registerHelper('difficultyLevel', function (difficulty) {
     }
 });
 
-/* helper functiont to render bootstrap rows of three for the trails iterated through */
-hbs.handlebars.registerHelper('multiof4', function(id) {
-    var remainder = id % 4;
-    
-    if (id == 1){
-        return true;
-    } else {
-        if (remainder == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-});
-
-/* helper functiont to render bootstrap rows of three for the trails iterated through */
-hbs.handlebars.registerHelper('multiof3', function(id) {
-    var remainder = id % 3;
-    
-    if(remainder == 0) {
-        return true;
-    } else { 
-        return false;
-    }
-});
-
 /* Create a handle to get the value of rating, and send the mount of stars back */
 
 module.exports = router; 
-
-/*
-Rylee's test IGNORE
-res.render('homepage', {
-    id: 1,
-    name: "South Kaibab Trail",
-    length: 3,
-    dog_friendly: true,
-    bike_friendly: true,
-    difficulty: "Difficult",
-    description: "This trail descends a series of steep, exposed switchbacks, allowing you to grasp the magnitude of the canyon as you stare into its depths.",
-    posted_by: 1,
-    comment: [
-        { 
-        id: 1,
-        comment_text: "I love this trail!"
-    },{
-        id: 1,
-        comment_text: "This trail has a beautiful view."
-    }
-    ],
-    rating: 3
-*/
