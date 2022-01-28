@@ -22,7 +22,9 @@
     </div>
   </section>
 
+<!-- trials container for the rows -->
 <div class="container-fluid">
+    <!-- itterates through the trails added in db -->
     <div class="row">
         <div class="col-sm-4 deck" style="background-color: #d2dee0ff; padding: 10px">
             <div class="text-center">
@@ -56,6 +58,7 @@
                                 <p>Bikes {{#if bike_friendly }}<span class="glyphicon glyphicon-ok"></span>{{else}}<span class="glyphicon glyphicon-remove"></span>{{/if}}</p>
                             </div>
                         </div>
+                        <!-- takes it to url for the commet page for that specific trail -->
                         <a href="/comment/{{id}}">view {{comment.length}} comments(s) </a>
                     </div>
             </div>
