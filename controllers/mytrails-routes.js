@@ -5,56 +5,29 @@ const { Trail, User, Comment, Rating } = require('../models');
 const storageRef = require('./api/trail-routes');
 const downloadTrailImage = require('./api/trail-routes');
 
-/* loading all trails the loggedIn user has created 
 router.get('/', (req, res) => {
-    Trail.findAll({
-        where: {
-            user_id: req.session.user_id
-        },
-        attributes: [
-            'id',
-            'name',
-            'length',
-            'dog_friendly',
-            'bike_friendly',
-            'difficulty',
-            'description',
-            'img_ref'
-        ],
-        group: 'id',
-        include: [
-            {
-                model: Comment,
-                attributes: ['id', 'comment_text', 'trail_id', 'user_id', 'created_at'],
-                include: {
-                    model: User,
-                    attributes: ['username']
-                }
-            },
-            {
-                model: Rating,
-                attributes: [[Sequelize.fn('AVG', Sequelize.col('rating')), 'avgRating']]
-            }
-            // {
-            //     model: User,
-            //     attributes: ['username']
-            // }
-        ]
-    })
-    .then(dbTrailData => {
-        if(!dbTrailData) {
-            res.status(404).json({message: 'No trail found'})
-            return;
+    res.render('mytrails', {
+        id: 1,
+        name: "South Kaibab Trail",
+        length: 3,
+        dog_friendly: true,
+        bike_friendly: true,
+        difficulty: "Difficult",
+        description: "This trail descends a series of steep, exposed switchbacks, allowing you to grasp the magnitude of the canyon as you stare into its depths.",
+        img_ref: "/example.jpg",
+        comment: [
+            { 
+            id: 1,
+            comment_text: "I love this trail!"
+        },{
+            id: 1,
+            comment_text: "This trail has a beautiful view."
         }
-        const trails = dbTrailData.map(trail => trail.get({ plain: true }));
-        res.render('mytrails', {trails});
-
-    }) .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
+        ],
+        rating: 3,
+        
     });
 });
-*/
 
 const exphbs = require('express-handlebars');
 const helpers = require('../utils/helpers')
@@ -71,10 +44,6 @@ hbs.handlebars.registerHelper('difficultyLevel', function (difficulty) {
     if(difficulty == "Difficult"){
         return "danger"
     }
-});
-
-router.get('/', (req, res) => {
-    res.render('mytrails');
 });
 
 /* Create a handle to get the value of rating, and send the mount of stars back */

@@ -172,3 +172,7 @@ createRatingForm.addEventListener('radio', async (e) => {
     .catch(err => console.log(err));
     console.log(data);
 });
+
+//add favorite btn active listener
+
+
