@@ -10,5 +10,23 @@ router.get('/', (req, res) => {
         res.render('favorites');
 });
 
+const exphbs = require('express-handlebars');
+const helpers = require('../utils/helpers')
+const hbs = exphbs.create({ helpers });
 
-module.exports = router; 
+/* helper functiont display bootstrap/pill background color */
+hbs.handlebars.registerHelper('difficultyLevel', function (difficulty) {
+    if(difficulty == "Easy"){
+        return "success"
+    }
+    if(difficulty == "Moderate"){
+        return "warning"
+    }
+    if(difficulty == "Difficult"){
+        return "danger"
+    }
+});
+
+/* Create a handle to get the value of rating, and send the mount of stars back */
+
+module.exports = router;

@@ -47,7 +47,7 @@ router.get('/', (req, res) => {
             return;
         }
         const trails = dbTrailData.map(trail => trail.get({ plain: true }));
-        res.render('usertrails', {trails});
+        res.render('mytrails', {trails});
 
     }) .catch(err => {
         console.log(err);
@@ -55,7 +55,28 @@ router.get('/', (req, res) => {
     });
 });
 */
-router.get('/', (req, res) => {
-    res.render('usertrails');
+
+const exphbs = require('express-handlebars');
+const helpers = require('../utils/helpers')
+const hbs = exphbs.create({ helpers });
+
+/* helper functiont display bootstrap/pill background color */
+hbs.handlebars.registerHelper('difficultyLevel', function (difficulty) {
+    if(difficulty == "Easy"){
+        return "success"
+    }
+    if(difficulty == "Moderate"){
+        return "warning"
+    }
+    if(difficulty == "Difficult"){
+        return "danger"
+    }
 });
+
+router.get('/', (req, res) => {
+    res.render('mytrails');
+});
+
+/* Create a handle to get the value of rating, and send the mount of stars back */
+
 module.exports = router;
