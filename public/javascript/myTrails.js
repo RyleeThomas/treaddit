@@ -1,11 +1,16 @@
+const { response } = require("express");
+
 //add delete trail api fetch
-async function deleteTrail(event) {
-    event.preventDefault();
-    await fetch(`/api/posts/${id}`, {
+const deleteTrail = document.querySelector("#destroyTrailBtn");
+
+deleteTrail.addEventListener( 'click', async (e) => {
+    var traidID = document.querySelector("#destroyTrailBtn").value;
+    await fetch(`/api/trails/${traidID}`, {
         method: 'DELETE'
-    });
-  }
-  
-  document.querySelector('#destroyTrailBtn').addEventListener('click', deleteTrail);
+    })
+    .then(
+        window.location.reload()
+        )
+});
 
 //add update user trail code

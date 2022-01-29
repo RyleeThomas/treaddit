@@ -1,8 +1,9 @@
-
+/*header font*/
 h2 {
   font-family: fantasy;
 }
 
+/*trail filter btns*/
 .filterBtn {
   background-color: #809712ff;
   color: black;
@@ -13,6 +14,7 @@ h2 {
   color: #f1f1f1;
 }
 
+/*trail card image*/
 .card {
     border: 10px solid transparent;
     margin-bottom: 15px;
@@ -24,10 +26,11 @@ h2 {
     border-color: #f1f1f1;
   }
 
+  /*trail */
   .deck {
     border: 10px solid white;
   }
-
+/*url links for all*/
   a {
     text-decoration: none;
     color: black;
@@ -37,11 +40,22 @@ h2 {
     color: black;
   }
 
+  /*add/update trail textarea*/
   textarea {
     width: 100%;
     margin-top: 10px;
   }
 
+  /*delete trail btn*/
+  #destroyTrailBtn:hover {
+    background-color: rgb(190, 94, 94);
+  }
+
+  #updateTrailBtn:hover, #updateTrailBtn:focus {
+    background-color: slategray;
+  }
+
+  /*rating animation on selectors*/
   .star-rating__stars {
     position: relative;
     height: 5rem;
