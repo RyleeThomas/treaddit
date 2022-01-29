@@ -11,7 +11,7 @@ const withAuth = require('../../utils/auth');
 // image prefix to Trail filepath store ** CONCAT WITH SNAPSHOT BELOW ** 
 // gs://treaddit.appspot.com/trails/project3.jpg
 
-
+/*
 const firebaseConfig = {
     apiKey: "AIzaSyDyyFmd6Y7okq8KMn7JyROKxfk46gKJfC4",
     authDomain: "treaddit.firebaseapp.com",
@@ -81,7 +81,7 @@ function downloadTrailImage(img_ref) {
     });
 }
 
-
+*/
 router.get('/', (req, res) => {
     Trail.findAll({
         attributes: [
@@ -189,16 +189,16 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/', upload.single("file"), (req, res) => {
-    console.log('req.file:', req.file)
+router.post('/', (req, res) => {
+   /* console.log('req.file:', req.file)
     console.log('req.body:', req.body)
-    uploadTrailImageFirebase(req.file)
+    //uploadTrailImageFirebase(req.file)
     .then((result) => {
         res.json(result);
         var img_ref = "/trails/" + req.file.originalname;    
         return downloadTrailImage(img_ref)
     })
-    .then(url => {
+    .then(url => {*/
     Trail.create({
         name: req.body.name,
         length: req.body.length,
@@ -207,17 +207,17 @@ router.post('/', upload.single("file"), (req, res) => {
         difficulty: req.body.difficulty,
         description: req.body.description,
         user_id: req.session.user_id,
-        img_ref: url
+        img_ref: req.body.img_ref
     })
-    // .then(dbTrailData => res.json(dbTrailData))
+    .then(dbTrailData => res.json(dbTrailData))
     .catch(err => {
         console.log(err);
-        // res.status(500).json(err);
+        res.status(500).json(err);
     });
-})});
+}); 
 
 
-router.post('/rating/:id', withAuth, (req, res) => {
+router.post('/rating/:id', (req, res) => {
 
     Rating.create({
         rating: req.body.rating,
@@ -231,7 +231,7 @@ router.post('/rating/:id', withAuth, (req, res) => {
     });
 });
 
-router.put('/rating/:id', withAuth, (req, res) => {
+router.put('/rating/:id', (req, res) => {
     console.log(req.body);
     Rating.update(req.body, {
         where: {
@@ -253,7 +253,7 @@ router.put('/rating/:id', withAuth, (req, res) => {
 })
 
 
-router.put('/:id', withAuth, (req, res) => {
+router.put('/:id', (req, res) => {
     Trail.update(
         {
             name: req.body.name,
@@ -282,7 +282,7 @@ router.put('/:id', withAuth, (req, res) => {
     });
 });
 
-router.delete('/:id', withAuth, (req, res) => {
+router.delete('/:id', (req, res) => {
     Trail.destroy({
         where: {
             id: req.params.id
