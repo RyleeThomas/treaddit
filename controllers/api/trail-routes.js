@@ -11,7 +11,7 @@ const withAuth = require('../../utils/auth');
 // image prefix to Trail filepath store ** CONCAT WITH SNAPSHOT BELOW ** 
 // gs://treaddit.appspot.com/trails/project3.jpg
 
-/*
+
 const firebaseConfig = {
     apiKey: "AIzaSyDyyFmd6Y7okq8KMn7JyROKxfk46gKJfC4",
     authDomain: "treaddit.firebaseapp.com",
@@ -81,7 +81,7 @@ function downloadTrailImage(img_ref) {
     });
 }
 
-*/
+
 router.get('/', (req, res) => {
     Trail.findAll({
         attributes: [
@@ -189,7 +189,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-   /* console.log('req.file:', req.file)
+    console.log('req.file:', req.file)
     console.log('req.body:', req.body)
     //uploadTrailImageFirebase(req.file)
     .then((result) => {
@@ -197,7 +197,7 @@ router.post('/', (req, res) => {
         var img_ref = "/trails/" + req.file.originalname;    
         return downloadTrailImage(img_ref)
     })
-    .then(url => {*/
+    .then(url => {
     Trail.create({
         name: req.body.name,
         length: req.body.length,
@@ -206,7 +206,7 @@ router.post('/', (req, res) => {
         difficulty: req.body.difficulty,
         description: req.body.description,
         user_id: req.session.user_id,
-        img_ref: req.body.img_ref
+        img_ref: url
     })
     .then(dbTrailData => res.json(dbTrailData))
     .catch(err => {
